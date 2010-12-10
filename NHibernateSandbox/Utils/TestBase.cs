@@ -31,9 +31,8 @@ namespace NHibernateSandbox.Utils
         {
             var configuration  = Fluently.Configure();
             
-            //ConfigureForSQLite(configuration);
+            ConfigureForSQLite(configuration);
             //ConfigureForMSSQL(configuration);
-            ConfigureForOracle(configuration);
 
             configuration.Mappings((m) =>
                                         {
@@ -52,19 +51,7 @@ namespace NHibernateSandbox.Utils
                                        .ConnectionString("Data Source=gor-laptop;Initial Catalog=NHibernateSandbox;Persist Security Info=True;User ID=sa;Password=sa123456;Asynchronous Processing=true;MultipleActiveResultSets=True")
                                        .Dialect(typeof (NHibernate.Dialect.MsSql2005Dialect).AssemblyQualifiedName)
                                        .Driver(typeof(NHibernate.Driver.SqlClientDriver).AssemblyQualifiedName)
-                                       .ProxyFactoryFactory(typeof(NHibernate.ByteCode.LinFu.ProxyFactoryFactory))
-                                       .FormatSql()
-                                       .ShowSql
-                                       );
-        }
-
-        private void ConfigureForOracle(FluentConfiguration configuration)
-        {
-            configuration.Database(OracleClientConfiguration.Oracle10
-                                       .ConnectionString("Data Source=ORA10.SCORTO.LOCAL;User Id=gor;Password=gor;")
-                                       .Dialect(typeof (NHibernate.Dialect.Oracle10gDialect).AssemblyQualifiedName)
-                                       .Driver(typeof(NHibernate.Driver.OracleClientDriver).AssemblyQualifiedName)
-                                       .ProxyFactoryFactory(typeof(NHibernate.ByteCode.LinFu.ProxyFactoryFactory))
+                                       .ProxyFactoryFactory(typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory))
                                        .FormatSql()
                                        .ShowSql
                                        );
@@ -73,7 +60,7 @@ namespace NHibernateSandbox.Utils
         private void ConfigureForSQLite(FluentConfiguration configuration)
         {
             configuration.Database( SQLiteConfiguration.Standard
-                                        .ProxyFactoryFactory(typeof(NHibernate.ByteCode.LinFu.ProxyFactoryFactory))
+                                        .ProxyFactoryFactory(typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory))
                                         .InMemory()
                                         .Dialect(typeof(SQLiteDialect).AssemblyQualifiedName)
                                         .Driver(typeof (SQLite20Driver).AssemblyQualifiedName)
@@ -86,15 +73,9 @@ namespace NHibernateSandbox.Utils
         {
             _configuration = configuration;
 
-            configuration.SetProperty(Environment.GenerateStatistics, "true");
-            configuration.SetProperty(Environment.UseMinimalPuts, "true");
-            configuration.SetProperty("cache.use_second_level_cache", "true");
-            configuration.SetProperty("cache.use_query_cache", "true");
-            configuration.SetProperty("cache.provider_class", "NHibernate.Cache.HashtableCacheProvider");
-
             configuration.SetProperty(Environment.ReleaseConnections, "on_close");
 
-            //new SchemaExport(configuration).Create(true, true);
+            //new SchemaExport(configuration).Create(false, true);
         }
 
         public ISession CreateSession()

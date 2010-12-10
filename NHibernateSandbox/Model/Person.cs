@@ -16,9 +16,8 @@ namespace NHibernateSandbox.Mappings
     {
         public PersonMap()
         {
-            Cache.ReadWrite();
             Id(x => x.Id).GeneratedBy.Native("SEQ_PERSON");
-            Map(x => x.Name).Length(8000);
+            Map(x => x.Name).Length(512);
         }
     }
 }
