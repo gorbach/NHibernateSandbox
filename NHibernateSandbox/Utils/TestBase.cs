@@ -75,7 +75,6 @@ namespace NHibernateSandbox.Utils
 
             configuration.SetProperty(Environment.ReleaseConnections, "on_close");
 
-            //new SchemaExport(configuration).Create(false, true);
         }
 
         public ISession CreateSession()
