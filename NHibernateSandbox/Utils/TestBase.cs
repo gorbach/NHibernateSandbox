@@ -33,6 +33,7 @@ namespace NHibernateSandbox.Utils
             
             ConfigureForSQLite(configuration);
             //ConfigureForMSSQL(configuration);
+            //ConfigureForOracle(configuration);
 
             configuration.Mappings((m) =>
                                         {
@@ -67,6 +68,18 @@ namespace NHibernateSandbox.Utils
                                         .FormatSql()
                                         .ShowSql
                 );
+        }
+
+        private void ConfigureForOracle(FluentConfiguration configuration)
+        {
+            configuration.Database(OracleClientConfiguration.Oracle10
+                                       .ConnectionString("Data Source=ORA10.SCORTO.LOCAL2;User Id=gor;Password=gor;")
+                                       .Dialect(typeof(NHibernate.Dialect.Oracle10gDialect).AssemblyQualifiedName)
+                                       .Driver(typeof(NHibernate.Driver.OracleClientDriver).AssemblyQualifiedName)
+                                       .ProxyFactoryFactory(typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory))
+                                       .FormatSql()
+                                       .ShowSql
+                                       );
         }
 
         private static void BuildSchema(Configuration configuration)

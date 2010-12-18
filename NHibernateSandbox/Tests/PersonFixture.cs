@@ -11,8 +11,12 @@ namespace NHibernateSandbox.Tests
         public void CanInsertPerson ()
         {
             //Arrange
-            var p = new Person() {Name = "BatMan"};
-            Session.Save(p);
+            var p = new Person() { Name = "BatMan" };
+            using(var tx = Session.BeginTransaction())
+            {
+                Session.Save(p);
+                tx.Commit();
+            }
             Session.Clear();
 
             //Act
