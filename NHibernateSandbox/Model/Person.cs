@@ -17,7 +17,7 @@ namespace NHibernateSandbox.Mappings
         public PersonMap()
         {
             Id(x => x.Id).GeneratedBy.Native("SEQ_PERSON");
-            Map(x => x.Name).Length(512);
+            Map(x => x.Name).CustomType("StringClob");
         }
     }
 }

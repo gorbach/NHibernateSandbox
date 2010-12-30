@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
@@ -9,6 +7,7 @@ using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Driver;
 using NHibernate.Tool.hbm2ddl;
+using NHibernateSandbox.Driver;
 using Environment = NHibernate.Cfg.Environment;
 
 namespace NHibernateSandbox.Utils
@@ -54,7 +53,7 @@ namespace NHibernateSandbox.Utils
                                        .Driver(typeof(NHibernate.Driver.SqlClientDriver).AssemblyQualifiedName)
                                        .ProxyFactoryFactory(typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory))
                                        .FormatSql()
-                                       .ShowSql
+                                       .ShowSql()
                                        );
         }
 
@@ -66,7 +65,7 @@ namespace NHibernateSandbox.Utils
                                         .Dialect(typeof(SQLiteDialect).AssemblyQualifiedName)
                                         .Driver(typeof (SQLite20Driver).AssemblyQualifiedName)
                                         .FormatSql()
-                                        .ShowSql
+                                        .ShowSql()
                 );
         }
 
@@ -75,12 +74,13 @@ namespace NHibernateSandbox.Utils
             configuration.Database(OracleClientConfiguration.Oracle10
                                        .ConnectionString("Data Source=ORA10.SCORTO.LOCAL2;User Id=gor;Password=gor;")
                                        .Dialect(typeof(NHibernate.Dialect.Oracle10gDialect).AssemblyQualifiedName)
-                                       .Driver(typeof(NHibernate.Driver.OracleClientDriver).AssemblyQualifiedName)
+                                       .Driver(typeof(CustomOracleDriver).AssemblyQualifiedName)
                                        .ProxyFactoryFactory(typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory))
                                        .FormatSql()
-                                       .ShowSql
+                                       .ShowSql()
                                        );
         }
+
 
         private static void BuildSchema(Configuration configuration)
         {
