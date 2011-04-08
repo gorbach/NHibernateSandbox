@@ -8,6 +8,7 @@ using NHibernate.Cfg;
 using NHibernate.Driver;
 using NHibernate.Tool.hbm2ddl;
 using NHibernateSandbox.Driver;
+using log4net.Config;
 using Environment = NHibernate.Cfg.Environment;
 
 namespace NHibernateSandbox.Utils
@@ -22,6 +23,7 @@ namespace NHibernateSandbox.Utils
 
         protected TestBase()
         {
+            BasicConfigurator.Configure();
             InitialiseNHibernate();
             Session = CreateSession();
         }
