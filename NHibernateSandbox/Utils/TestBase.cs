@@ -8,6 +8,7 @@ using NHibernate.Cfg;
 using NHibernate.Driver;
 using NHibernate.Tool.hbm2ddl;
 using NHibernateSandbox.Driver;
+using NUnit.Framework;
 using Environment = NHibernate.Cfg.Environment;
 
 namespace NHibernateSandbox.Utils
@@ -51,7 +52,6 @@ namespace NHibernateSandbox.Utils
                                        .ConnectionString("Data Source=gor-laptop;Initial Catalog=NHibernateSandbox;Persist Security Info=True;User ID=sa;Password=sa123456;Asynchronous Processing=true;MultipleActiveResultSets=True")
                                        .Dialect(typeof (NHibernate.Dialect.MsSql2005Dialect).AssemblyQualifiedName)
                                        .Driver(typeof(NHibernate.Driver.SqlClientDriver).AssemblyQualifiedName)
-                                       .ProxyFactoryFactory(typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory))
                                        .FormatSql()
                                        .ShowSql()
                                        );
@@ -60,10 +60,7 @@ namespace NHibernateSandbox.Utils
         private void ConfigureForSQLite(FluentConfiguration configuration)
         {
             configuration.Database( SQLiteConfiguration.Standard
-                                        .ProxyFactoryFactory(typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory))
                                         .InMemory()
-                                        .Dialect(typeof(SQLiteDialect).AssemblyQualifiedName)
-                                        .Driver(typeof (SQLite20Driver).AssemblyQualifiedName)
                                         .FormatSql()
                                         .ShowSql()
                 );
@@ -75,7 +72,6 @@ namespace NHibernateSandbox.Utils
                                        .ConnectionString("Data Source=ORA10.SCORTO.LOCAL2;User Id=gor;Password=gor;")
                                        .Dialect(typeof(NHibernate.Dialect.Oracle10gDialect).AssemblyQualifiedName)
                                        .Driver(typeof(CustomOracleDriver).AssemblyQualifiedName)
-                                       .ProxyFactoryFactory(typeof(NHibernate.ByteCode.Castle.ProxyFactoryFactory))
                                        .FormatSql()
                                        .ShowSql()
                                        );
